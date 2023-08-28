@@ -14,20 +14,3 @@ test:
 	go vet ./...
 	go test -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out
-
-.PHONY: lint
-lint:
-	go get -u golang.org/x/lint/golint
-	golint ./...
-
-# Build the Docker build stage TARGET
-.PHONY: image
-image:
-	$(DOCKER_BIN) build -t $(IMAGE):$(TAG) .
-
-# Push Docker images to the registry
-.PHONY: publish
-publish:
-	$(DOCKER_BIN) push $(IMAGE):$(TAG)
-	$(DOCKER_BIN) tag $(IMAGE):$(TAG) $(IMAGE):latest
-	$(DOCKER_BIN) push $(IMAGE):latest
