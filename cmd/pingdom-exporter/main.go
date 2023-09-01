@@ -22,7 +22,6 @@ var (
 	token             string
 	tags              string
 	metricsPath       string
-	waitSeconds       int
 	port              int
 	outageCheckPeriod int
 	defaultUptimeSLO  float64
