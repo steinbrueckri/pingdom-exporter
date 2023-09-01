@@ -23,6 +23,7 @@ var (
 	tags              string
 	metricsPath       string
 	port              int
+	host              string
 	outageCheckPeriod int
 	defaultUptimeSLO  float64
 
@@ -82,6 +83,7 @@ var (
 )
 
 func init() {
+	flag.StringVar(&host, "host", "0.0.0.0", "host to listen on")
 	flag.IntVar(&port, "port", 9158, "port to listen on")
 	flag.IntVar(&outageCheckPeriod, "outage-check-period", 7, "time (in days) in which to retrieve outage data from the Pingdom API")
 	flag.Float64Var(&defaultUptimeSLO, "default-uptime-slo", 99.0, "default uptime SLO to be used when the check doesn't provide a uptime SLO tag (i.e. uptime_slo_999 to 99.9% uptime SLO)")
@@ -313,6 +315,6 @@ func main() {
              </html>`))
 	})
 
-	fmt.Fprintf(os.Stdout, "Pingdom Exporter %v listening on http://0.0.0.0:%v\n", VERSION, port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+	fmt.Fprintf(os.Stdout, "Pingdom Exporter %v listening on http://%v:%v\n", VERSION, host, port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("%v:%d", host, port), nil))
 }
