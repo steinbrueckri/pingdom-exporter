@@ -1,2 +1,21 @@
 builds:
-  - main: ./cmd/pingdom-exporter/
+  - id: linux-build
+    main: ./cmd/pingdom-exporter/
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    mod_timestamp: &build-timestamp "{{ .CommitTimestamp }}"
+    ldflags: -w -s -extldflags "-static"
+    env:
+      - CGO_ENABLED=0
+
+  - id: darwin-build
+    main: ./cmd/pingdom-exporter/
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    mod_timestamp: *build-timestamp
