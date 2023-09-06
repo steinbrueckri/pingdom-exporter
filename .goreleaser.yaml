@@ -1,2 +1,4 @@
 builds:
   - main: ./cmd/pingdom-exporter/
+    ldflags:
+      - '-extldflags "-static -s -w"'
